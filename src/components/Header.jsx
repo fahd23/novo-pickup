@@ -56,7 +56,7 @@ const Header = () => {
             Pickup
           </h1>
         </Link>
-        <Menu showCatMenu={showCatMenu} setShowCatMenu={setShowCatMenu} />
+
         {mobileMenu && (
           <MenuMobile
             showCatMenu={showCatMenu}
@@ -110,7 +110,7 @@ const Header = () => {
           {/* Icon End */}
           {/* Mobile Icon Start */}
 
-          <div className="md:hidden w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative -mr-2">
+          <div className=" w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative -mr-2">
             {mobileMenu ? (
               <VscChromeClose
                 className="text-[16px]"
@@ -118,7 +118,7 @@ const Header = () => {
               />
             ) : (
               <BiMenuAltRight
-                className="text-[20px] flex md:hidden"
+                className="text-[20px] flex "
                 onClick={() => setMobileMenu(true)}
               />
             )}

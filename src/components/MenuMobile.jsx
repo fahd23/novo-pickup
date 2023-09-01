@@ -5,7 +5,7 @@ import { data, subMenuData } from "/src/utils/menu";
 
 const MenuMobile = ({ showCatMenu, setShowCatMenu, setMobileMenu }) => {
   return (
-    <ul className="flex flex-col md:hidden font-bold absolute top-[50px] left-0 w-full h-[calc(100vh - 50px)] bg-white border-t text-black">
+    <ul className="flex flex-col font-bold absolute top-[50px]  w-full h-[calc(100vh - 50px)] bg-white border-t text-black md:top-[80px] md:w-96 md:h-[100vh] right-0 ">
       {data?.map((item) => (
         <React.Fragment key={item.id}>
           {item?.subMenu ? (

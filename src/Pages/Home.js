@@ -1,36 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Wrapper from "../components/Wrapper";
 import ProductCard from "./../components/ProductCard";
-import RelatedProducts from "./../components/RelatedProducts";
 import { HiOutlineSearch } from "react-icons/hi";
+import axios from "axios";
+import { API_URL } from "../utils/constant";
+import ShimmerUI from "../components/ShimmerUI";
+import HeroBanner from "../components/HeroBanner";
+
 const Home = () => {
+  const [restaurantsList, setRestaurantsList] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const response = await axios.get(API_URL);
+    const data = await response?.data;
+    setRestaurantsList(
+      data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants ||
+        data?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+    );
+    // console.log(
+    //   data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+    //     ?.restaurants ||
+    //     data?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle
+    //       ?.restaurants
+    // );
+    // console.log(
+    //   data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    // );
+
+    // console.log(
+    //   data?.data?.success?.cards[4]?.gridWidget?.gridElements?.infoWithStyle
+    //     ?.restaurants
+    // );
+  };
+
   return (
-    <Wrapper className="py-10">
-      <div className="flex flex-wrap items-center">
-        <label className="text-lg font-semibold">Filter :</label>
-        <input
-          type="text"
-          className="border-black border-solid border-[1px] rounded-sm py-1 px-2 md:mx-2"
-        />
-        <button className="p-4 py-[5px] bg-zinc-800 text-white rounded md:mx-1 md:my-0 m-1 hidden sm:flex">
-          Search
-        </button>
-        <button className="p-3 py-[8px] bg-zinc-800 text-white rounded md:mx-2 md:my-0 m-2 sm:hidden">
-          <HiOutlineSearch />
-        </button>
+    <>
+      <div className="py-10">
+        <HeroBanner />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 my-14 px-5 md:px-0">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-      </div>
-      <RelatedProducts />
-    </Wrapper>
+      <Wrapper className="py-10">
+        <h1 className="text-2xl tracking-tight font-bold">Top Restaurants</h1>
+        {restaurantsList && restaurantsList.length === 0 ? (
+          <ShimmerUI />
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 my-14 px-5 md:px-0">
+            {restaurantsList?.map((item) => {
+              return <ProductCard data={item} key={item?.info.id} />;
+            })}
+          </div>
+        )}
+      </Wrapper>
+    </>
   );
 };
 
